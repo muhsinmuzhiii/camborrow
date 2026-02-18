@@ -1,0 +1,179 @@
+{% load static %}
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Seller Dashboard</title>
+
+  <!-- Plugins CSS -->
+  <link rel="stylesheet" href="{% static 'assets/vendors/mdi/css/materialdesignicons.min.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/vendors/css/vendor.bundle.base.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+</head>
+
+<body>
+<div class="container-scroller">
+
+  <!-- ================= SIDEBAR ================= -->
+  <nav class="sidebar sidebar-offcanvas" id="sidebar">
+    <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
+      <a class="sidebar-brand brand-logo" href="#">
+        <h3 style="color:white;">CamBorrow</h3>
+      </a>
+    </div>
+
+    <ul class="nav">
+
+      <!-- Profile -->
+      <li class="nav-item profile">
+        <div class="profile-desc">
+          <div class="profile-name">
+            <h5 class="mb-0">{{ request.user }}</h5>
+            <span>Seller</span>
+          </div>
+        </div>
+      </li>
+
+      <li class="nav-item nav-category">
+        <span class="nav-link">Navigation</span>
+      </li>
+
+      <!-- Seller Profile -->
+      <li class="nav-item menu-items">
+        <a class="nav-link" href="{% url 'seller_profile' %}">
+          <span class="menu-icon"><i class="mdi mdi-account"></i></span>
+          <span class="menu-title">Profile</span>
+        </a>
+      </li>
+
+      <!-- Add Camera -->
+      <li class="nav-item menu-items">
+        <a class="nav-link" href="{% url 'camera_add' %}">
+          <span class="menu-icon"><i class="mdi mdi-camera"></i></span>
+          <span class="menu-title">Add Camera</span>
+        </a>
+      </li>
+
+      <!-- Camera List -->
+      <li class="nav-item menu-items">
+        <a class="nav-link" href="{% url 'seller_camera_list' %}">
+          <span class="menu-icon"><i class="mdi mdi-format-list-bulleted"></i></span>
+          <span class="menu-title">My Cameras</span>
+        </a>
+      </li>
+
+      <!-- Add Lens -->
+      <li class="nav-item menu-items">
+        <a class="nav-link" href="{% url 'lens_add' %}">
+          <span class="menu-icon"><i class="mdi mdi-lens"></i></span>
+          <span class="menu-title">Add Lens</span>
+        </a>
+      </li>
+
+      <!-- Lens List -->
+      <li class="nav-item menu-items">
+        <a class="nav-link" href="{% url 'seller_lens_list' %}">
+          <span class="menu-icon"><i class="mdi mdi-format-list-bulleted"></i></span>
+          <span class="menu-title">My Lens</span>
+        </a>
+      </li>
+
+      <!-- Add Accessory -->
+      <li class="nav-item menu-items">
+        <a class="nav-link" href="{% url 'accessory_add' %}">
+          <span class="menu-icon"><i class="mdi mdi-archive"></i></span>
+          <span class="menu-title">Add Accessory</span>
+        </a>
+      </li>
+
+      <!-- Accessory List -->
+      <li class="nav-item menu-items">
+        <a class="nav-link" href="{% url 'seller_accessory_list' %}">
+          <span class="menu-icon"><i class="mdi mdi-format-list-bulleted"></i></span>
+          <span class="menu-title">My Accessories</span>
+        </a>
+      </li>
+
+    </ul>
+  </nav>
+
+  <!-- ================= PAGE BODY ================= -->
+  <div class="container-fluid page-body-wrapper">
+
+    <!-- NAVBAR -->
+    <nav class="navbar p-0 fixed-top d-flex flex-row">
+      <div class="navbar-menu-wrapper flex-grow d-flex align-items-stretch">
+        <button class="navbar-toggler" type="button" data-toggle="minimize">
+          <span class="mdi mdi-menu"></span>
+        </button>
+
+        <ul class="navbar-nav navbar-nav-right">
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              {{ request.user }}
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- ================= MAIN PANEL ================= -->
+    <div class="main-panel">
+      <div class="content-wrapper">
+
+        <!-- DASHBOARD CARDS -->
+        <div class="row">
+
+          <div class="col-md-4 grid-margin">
+            <div class="card">
+              <div class="card-body text-center">
+                <h4>Add Camera</h4>
+                <a href="{% url 'camera_add' %}" class="btn btn-primary mt-3">Open</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 grid-margin">
+            <div class="card">
+              <div class="card-body text-center">
+                <h4>Add Lens</h4>
+                <a href="{% url 'lens_add' %}" class="btn btn-primary mt-3">Open</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 grid-margin">
+            <div class="card">
+              <div class="card-body text-center">
+                <h4>Add Accessory</h4>
+                <a href="{% url 'accessory_add' %}" class="btn btn-primary mt-3">Open</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- CHILD TEMPLATE CONTENT -->
+        {% block content %}
+        {% endblock %}
+
+      </div>
+
+      <!-- FOOTER -->
+      <footer class="footer text-center">
+        <span>©️ 2026 CamBorrow Seller Panel</span>
+      </footer>
+
+    </div>
+  </div>
+</div>
+
+<!-- ================= JS ================= -->
+<script src="{% static 'assets/vendors/js/vendor.bundle.base.js' %}"></script>
+<script src="{% static 'assets/js/off-canvas.js' %}"></script>
+<script src="{% static 'assets/js/misc.js' %}"></script>
+
+</body>
+</html>

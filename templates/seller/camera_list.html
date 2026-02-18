@@ -1,0 +1,43 @@
+{% extends 'seller/sellerbase.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<h2>My Cameras</h2>
+
+<a href="{% url 'camera_add' %}" class="btn btn-primary mb-3">Add Camera</a>
+
+<table class="table table-bordered">
+    <tr>
+        <th>Name</th>
+        <th>Model</th>
+        <th>Brand</th>
+        <th>Rent/Day</th>
+        <th>Actions</th>
+    </tr>
+
+    {% for c in cameras %}
+    <tr>
+        <td>{{ c.camera_name }}</td>
+        <td>{{ c.camera_model }}</td>
+        <td>{{ c.brand }}</td>
+        <td>{{ c.rent_per_day }}</td>
+        <td>
+            <a href="{% url 'camera_edit' c.id %}" class="btn btn-sm btn-warning">Edit</a>
+            <a href="{% url 'camera_delete' c.id %}" class="btn btn-sm btn-danger">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}
+
+</body>
+</html>

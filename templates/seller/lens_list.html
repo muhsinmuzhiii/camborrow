@@ -1,0 +1,42 @@
+{% extends 'seller/sellerbase.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Lens List</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="p-4">
+
+<h2>Lens List</h2>
+
+<a href="{% url 'lens_add' %}" class="btn btn-primary mb-3">Add Lens</a>
+
+<table class="table table-bordered">
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Mount</th>
+<th>Rent</th>
+<th>Actions</th>
+</tr>
+
+{% for l in lens %}
+<tr>
+<td>{{ l.lens_name }}</td>
+<td>{{ l.lens_type }}</td>
+<td>{{ l.mount_type }}</td>
+<td>{{ l.rent_per_day }}</td>
+<td>
+<a href="{% url 'lens_edit' l.id %}" class="btn btn-warning btn-sm">Edit</a>
+<a href="{% url 'lens_delete' l.id %}" class="btn btn-danger btn-sm">Delete</a>
+</td>
+</tr>
+{% endfor %}
+
+</table>
+{% endblock %}
+</body>
+</html>

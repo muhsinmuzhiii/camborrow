@@ -1,4 +1,4 @@
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, User
 from django.db import models
 
 # Create your models here.
@@ -35,7 +35,7 @@ class Customer(models.Model):
 
 
 class Camera(models.Model):
-    seller = models.ForeignKey("Seller", on_delete=models.CASCADE)
+    camara_detail = models.ForeignKey("Seller", on_delete=models.DO_NOTHING)
 
     camera_name = models.CharField(max_length=100)
     camera_model = models.CharField(max_length=100)
@@ -66,7 +66,7 @@ class Camera(models.Model):
     document = models.FileField(upload_to="camera_docs/")
 
     is_available = models.BooleanField(default=True)
-
+    stock = models.IntegerField(default=1)
     def _str_(self):
         return self.camera_name
 
@@ -93,7 +93,7 @@ class Lens(models.Model):
 
     image = models.ImageField(upload_to="lens_images/")
     is_available = models.BooleanField(default=True)
-
+    stock = models.IntegerField(default=1)
     def __str__(self):
         return self.lens_name
 
@@ -121,6 +121,30 @@ class Accessory(models.Model):
 
     image = models.ImageField(upload_to="accessory_images/")
     is_available = models.BooleanField(default=True)
-
+    stock = models.IntegerField(default=1)
     def __str__(self):
         return self.accessory_name
+
+
+
+#    CART
+class Cart(models.Model):
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    camera = models.ForeignKey(Camera, on_delete=models.CASCADE, null=True, blank=True)
+    lens = models.ForeignKey(Lens, on_delete=models.CASCADE, null=True, blank=True)
+    accessory = models.ForeignKey(Accessory, on_delete=models.CASCADE, null=True, blank=True)
+    quantity = models.IntegerField(default=1)
+    added_on = models.DateTimeField(auto_now_add=True)
+
+
+
+class Order(models.Model):
+    customer = models.ForeignKey("Customer", on_delete=models.CASCADE)
+    camera = models.ForeignKey("Camera", on_delete=models.CASCADE, null=True, blank=True)
+    lens = models.ForeignKey("Lens", on_delete=models.CASCADE, null=True, blank=True)
+    accessory = models.ForeignKey("Accessory", on_delete=models.CASCADE, null=True, blank=True)
+
+    quantity = models.IntegerField(default=1)
+    ordered_on = models.DateTimeField(auto_now_add=True)
+
+#

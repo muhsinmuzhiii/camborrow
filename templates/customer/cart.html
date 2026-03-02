@@ -1,0 +1,80 @@
+{% extends "customer/customerbase.html" %}
+{% block content %}
+
+<div class="container mt-4">
+    <div class="row">
+
+        <!-- LEFT SIDE - CART ITEMS -->
+        <div class="col-md-8">
+
+            {% for item in items %}
+            <div class="card mb-3 shadow-sm p-3">
+                <div class="row align-items-center">
+
+                    <!-- IMAGE -->
+                    <div class="col-md-3">
+                        {% if item.lens %}
+                            <img src="{{ item.lens.image.url }}" class="img-fluid" style="height:120px; object-fit:cover;">
+                        {% elif item.camera %}
+                            <img src="{{ item.camera.image.url }}" class="img-fluid" style="height:120px; object-fit:cover;">
+                        {% elif item.accessory %}
+                            <img src="{{ item.accessory.image.url }}" class="img-fluid" style="height:120px; object-fit:cover;">
+                        {% endif %}
+                    </div>
+
+                    <!-- DETAILS -->
+                    <div class="col-md-6">
+                        {% if item.lens %}
+                            <h5>{{ item.lens.lens_name }}</h5>
+                            <p>₹ {{ item.lens.rent_per_day }} / day</p>
+                        {% elif item.camera %}
+                            <h5>{{ item.camera.camera_name }}</h5>
+                            <p>₹ {{ item.camera.rent_per_day }} / day</p>
+                        {% elif item.accessory %}
+                            <h5>{{ item.accessory.accessory_name }}</h5>
+                            <p>₹ {{ item.accessory.rent_per_day }} / day</p>
+                        {% endif %}
+
+                        <p>Quantity: {{ item.quantity }}</p>
+                    </div>
+
+                    <!-- REMOVE BUTTON -->
+                    <div class="col-md-3 text-end">
+                        <a href="{% url 'remove_cart' item.id %}" class="btn btn-danger btn-sm">
+                            Remove
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+            {% empty %}
+                <h4 class="text-center">Your cart is empty</h4>
+            {% endfor %}
+
+        </div>
+
+
+        <!-- RIGHT SIDE - TOTAL SECTION -->
+        <div class="col-md-4">
+            <div class="card shadow-sm p-4">
+
+                <h5 class="mb-3">PRICE DETAILS</h5>
+                <hr>
+
+                <div class="d-flex justify-content-between">
+                    <span>Total</span>
+                    <strong>₹ {{ total }}</strong>
+                </div>
+
+                <hr>
+
+                <a href="{% url 'buy_cart' %}" class="btn btn-success">
+                    Buy Now
+                </a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

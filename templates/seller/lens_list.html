@@ -18,8 +18,10 @@
 <tr>
 <th>Name</th>
 <th>Type</th>
-<th>Mount</th>
+<th>mount</th>
+<th>focal length</th>
 <th>Rent</th>
+<th>image</th>
 <th>Actions</th>
 </tr>
 
@@ -28,8 +30,14 @@
 <td>{{ l.lens_name }}</td>
 <td>{{ l.lens_type }}</td>
 <td>{{ l.mount_type }}</td>
+    <td>{{ l.focal_length }}</td>
 <td>{{ l.rent_per_day }}</td>
-<td>
+ <td>
+            {% if l.image %}
+                <img src="{{ l.image.url }}" width="80">
+            {% endif %}
+        </td>
+    <td>
 <a href="{% url 'lens_edit' l.id %}" class="btn btn-warning btn-sm">Edit</a>
 <a href="{% url 'lens_delete' l.id %}" class="btn btn-danger btn-sm">Delete</a>
 </td>

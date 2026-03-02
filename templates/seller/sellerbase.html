@@ -11,6 +11,37 @@
   <link rel="stylesheet" href="{% static 'assets/vendors/mdi/css/materialdesignicons.min.css' %}">
   <link rel="stylesheet" href="{% static 'assets/vendors/css/vendor.bundle.base.css' %}">
   <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+    <style>
+    /* Full page background */
+    body {
+        background-color: #D3AB80 !important;
+    }
+
+    .container-scroller {
+        background-color: ##023020 !important;
+    }
+
+    /* Sidebar background */
+    .sidebar {
+        background-color: ##023020 !important;
+    }
+
+    /* Navbar background */
+    .navbar {
+        background-color: ##023020 !important;
+    }
+
+    /* Main content area */
+    .content-wrapper {
+        background-color: #D3AB80 !important;
+    }
+
+    /* Footer */
+    .footer {
+        background-color: #D3AB80 !important;
+        color: #000000;
+    }
+</style>
 </head>
 
 <body>
@@ -95,6 +126,14 @@
           <span class="menu-title">My Accessories</span>
         </a>
       </li>
+        <li class="nav-item menu-items">
+            <a class="nav-link" href="{% url 'Log__out' %}">
+                <span class="menu-icon">
+                    <i class="mdi mdi-file-document-box"></i>
+                </span>
+                <span class="menu-title">LOG OUT</span>
+            </a>
+          </li>
 
     </ul>
   </nav>
@@ -130,7 +169,7 @@
             <div class="card">
               <div class="card-body text-center">
                 <h4>Add Camera</h4>
-                <a href="{% url 'camera_add' %}" class="btn btn-primary mt-3">Open</a>
+                <a href="{% url 'camera_add' %}" class="btn btn-primary mt-3">ADD</a>
               </div>
             </div>
           </div>
@@ -139,7 +178,7 @@
             <div class="card">
               <div class="card-body text-center">
                 <h4>Add Lens</h4>
-                <a href="{% url 'lens_add' %}" class="btn btn-primary mt-3">Open</a>
+                <a href="{% url 'lens_add' %}" class="btn btn-primary mt-3">ADD</a>
               </div>
             </div>
           </div>
@@ -148,7 +187,7 @@
             <div class="card">
               <div class="card-body text-center">
                 <h4>Add Accessory</h4>
-                <a href="{% url 'accessory_add' %}" class="btn btn-primary mt-3">Open</a>
+                <a href="{% url 'accessory_add' %}" class="btn btn-primary mt-3">ADD</a>
               </div>
             </div>
           </div>

@@ -84,7 +84,7 @@ def login_view(request):
 
 def seller_add(request):
     if request.method == "POST":
-        seller_form = SellerRegister(request.POST, request.FILES,request.FILES)
+        seller_form = SellerRegister(request.POST, request.FILES)
         login_form = LoginRegister(request.POST)
 
 
@@ -125,7 +125,3 @@ def customer_add(request):
     return render(request, 'register2.html',{'customer_form':customer_form,'login_form':login_form})
 
 
-def customer_profile(request):
-    data = request.user
-    customer_profile =  Customer.objects.get(customer_detail_id=data.id)
-    return render(request,"customer/customer_profile.html",{"data":customer_profile})

@@ -1,0 +1,12 @@
+<h2>Buy Page</h2>
+
+{% for i in items %}
+    {% if i.camera %}
+        <p>{{ i.camera.camera_name }}</p>
+        <p>₹ {{ i.camera.rent_per_day }}</p>
+    {% endif %}
+{% endfor %}
+
+<h3>Total Amount: ₹ {{ total }}</h3>
+
+<button>Proceed to Payment</button>

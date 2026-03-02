@@ -1,0 +1,103 @@
+{% extends "customer/customerbase.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<style>
+.page-header {
+    background-color: #D3AB80;
+    color: white;
+    padding: 15px;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.page-container {
+    background-color: #f1f3f6;
+    padding: 30px;
+    min-height: 100vh;
+}
+
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+
+.cart-btn {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 8px;
+    border-radius: 4px;
+    width: 100%;
+}
+
+.view-btn {
+    background-color: #fb641b;
+    color: white;
+    border: none;
+    padding: 8px;
+    border-radius: 4px;
+    width: 100%;
+    margin-top: 8px;
+}
+</style>
+
+<div class="page-header text-center">
+    Available Lenses
+</div>
+
+<div class="page-container">
+    <div class="row">
+
+        {% for l in lenses %}
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card shadow h-100">
+
+                {% if l.image %}
+                    <img src="{{ l.image.url }}" class="card-img-top">
+                {% else %}
+                    <div class="text-center p-5">No Image</div>
+                {% endif %}
+
+                <div class="card-body">
+                    <h5 class="card-title">{{ l.lens_name }}</h5>
+
+                    <p class="card-text">
+                        <strong>Lens Type:</strong> {{ l.lens_type }} <br>
+                        <strong>Mount Type:</strong> {{ l.mount_type }} <br>
+                        <strong>Focal Length:</strong> {{ l.focal_length }} <br>
+                        <strong>Rent/Day:</strong> ₹ {{ l.rent_per_day }}
+                    </p>
+
+                    {% if l.is_available %}
+                        <p class="text-success">Available</p>
+                    {% else %}
+                        <p class="text-danger">Not Available</p>
+                    {% endif %}
+
+                        <!-- Add to Cart -->
+                        <a href="{% url 'add_cart' 'lens' l.id %}" class="btn cart-btn">
+                            Add to Cart
+                        </a>
+
+                        <!-- View Cart -->
+                        <a href="{% url 'cart_view' %}" class="btn view-btn">
+                            View Cart
+                        </a>
+
+
+                </div>
+
+            </div>
+        </div>
+
+        {% empty %}
+        <div class="text-center">
+            <h4>No Lenses Available</h4>
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+
+{% endblock %}

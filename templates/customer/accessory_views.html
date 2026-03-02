@@ -1,0 +1,132 @@
+{% extends "customer/customerbase.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<style>
+.flipkart-header {
+    background-color: #D3AB80;
+    color: white;
+    padding: 15px;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.camera-container {
+    background-color: #f1f3f6;
+    padding: 30px;
+    min-height: 100vh;
+}
+
+.camera-card {
+    background-color: white;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    transition: 0.3s;
+    height: 100%;
+}
+
+.camera-card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.camera-img {
+    height: 180px;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.price {
+    font-size: 18px;
+    font-weight: bold;
+    color: #212121;
+}
+
+.brand {
+    color: #878787;
+    font-size: 14px;
+}
+
+.available {
+    color: green;
+    font-weight: 500;
+}
+
+.not-available {
+    color: red;
+    font-weight: 500;
+}
+
+.rent-btn {
+    background-color: #fb641b;
+    color: white;
+    border: none;
+    padding: 8px;
+    border-radius: 4px;
+    margin-top: 10px;
+    width: 100%;
+}
+.cart-btn {
+    display: inline-block;
+    background-color: #28a745;   /* Green */
+    color: white;
+    padding: .5px 70px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.3s ease;
+}
+</style>
+
+<div class="flipkart-header text-center">
+    Available Accessories
+</div>
+
+<div class="container-fluid camera-container">
+    <div class="row g-4">
+
+        {% for i in data %}
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <div class="camera-card">
+
+                {% if i.image %}
+                    <img src="{{ i.image.url }}" class="camera-img">
+                {% else %}
+                    <div class="text-center text-muted">No Image</div>
+                {% endif %}
+
+                <h5 class="mt-2">{{ i.accessory_name }}</h5>
+                <div class="brand">{{ i.brand }}</div>
+
+                <div class="price mt-2">₹ {{ i.rent_per_day }} / day</div>
+
+                {% if i.is_available %}
+                    <div class="available">Available</div>
+                {% else %}
+                    <div class="not-available">Not Available</div>
+                {% endif %}
+
+               {% for i in data %}
+                <a href="{% url 'add_cart' 'accessory' i.id %}" class="btn btn-success">
+                    Add to Cart
+                </a>
+                {% endfor %}
+
+                <button class="rent-btn">
+                    <a href="{% url 'cart_view' %}" >  Rent Now</a>
+                </button>
+
+            </div>
+        </div>
+                    {% if c.stock > 0 %}
+                    <p class="text-success">Available</p>
+                    {% else %}
+                    <p class="text-danger">Not Available</p>
+                    {% endif %}
+        {% endfor %}
+
+    </div>
+</div>
+
+{% endblock %}

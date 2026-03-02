@@ -1,0 +1,48 @@
+{% extends "admin/adminbase.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="container mt-4">
+    <div class="card shadow">
+        <div class="card-header bg-dark text-white">
+            <h4 class="mb-0">Camera List</h4>
+        </div>
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped table-hover">
+
+                    <thead class="table-dark">
+
+
+                    <tr>
+                        <th>Name</th>
+                        <th>camera_model</th>
+                        <th>brand</th>
+                        <th>camera_type</th>
+                        <th>rent_per_day</th>
+                        <th>image</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    {% for i in data %}
+                    <tr>
+                        <td>{{ i.camera_name }}</td>
+                        <td>{{ i.camera_model }}</td>
+                        <td>{{ i.brand }}</td>
+                        <td>{{ i.camera_type }}</td>
+                        <td>{{ i.rent_per_day }}</td>
+                        <td><img src="{{i.image.url}}" height="100px" width="100px"></td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

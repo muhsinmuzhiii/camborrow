@@ -1,0 +1,15 @@
+<h2>Seller Bookings</h2>
+
+{% for i in bookings %}
+
+    {% if i.camera %}
+        <p>{{ i.camera.camera_name }} - {{ i.quantity }}</p>
+    {% elif i.lens %}
+        <p>{{ i.lens.lens_name }} - {{ i.quantity }}</p>
+    {% elif i.accessory %}
+        <p>{{ i.accessory.accessory_name }} - {{ i.quantity }}</p>
+    {% endif %}
+
+{% empty %}
+    <p>No bookings yet</p>
+{% endfor %}

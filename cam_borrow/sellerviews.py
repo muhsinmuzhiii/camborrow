@@ -1,4 +1,4 @@
-
+from django.contrib.auth import logout
 from django.shortcuts import render, redirect
 
 from cam_borrow.forms import SellerRegister, CameraRegister, LensRegister, AccessoryRegister
@@ -49,22 +49,6 @@ def camera_add(request):
     return render(request, "seller/camera_add.html", {"form": form})
 
 
-def lens_add(request):
-
-    seller = Seller.objects.get(seller_detail=request.user)
-
-    if request.method == "POST":
-        form = LensRegister(request.POST, request.FILES)
-
-        if form.is_valid():
-            lens = form.save(commit=False)   # VERY IMPORTANT
-            lens.seller = seller             # assign seller
-            lens.save()
-            return redirect('seller_lens_list')
-    else:
-        form = LensRegister()
-
-    return render(request, 'seller/lens_add.html', {'form': form})
 
 # -------------------------------
 # Lens EDIT
@@ -96,18 +80,34 @@ def lens_delete(request, id):
     lens.delete()
 
     return redirect('seller_lens_list')
+def lens_add(request):
+
+    seller = Seller.objects.get(seller_detail=request.user)
+
+    if request.method == "POST":
+        form = LensRegister(request.POST, request.FILES)
+
+        if form.is_valid():
+            lens = form.save(commit=False)   # VERY IMPORTANT
+            lens.seller = seller             # assign seller
+            lens.save()
+            return redirect('seller_lens_list')
+    else:
+        form = LensRegister()
+
+    return render(request, 'seller/lens_add.html', {'form': form})
 
 def accessory_add(request):
 
-    seller = Seller.objects.get(seller_detail=request.user)
 
     if request.method == "POST":
         form = AccessoryRegister(request.POST, request.FILES)
 
         if form.is_valid():
-            accessory = form.save(commit=False)  # save stop
-            accessory.seller = seller            # assign seller
-            accessory.save()                     # now save
+            accessorys = form.save(commit=False)
+            sell = Seller.objects.get(seller_detail=request.user)# save stop
+            accessorys.seller = sell            # assign seller
+            accessorys.save()                     # now save
             return redirect('seller_accessory_list')
     else:
         form = AccessoryRegister()
@@ -155,20 +155,18 @@ def seller_lens_list(request):
 
 
 
+
+
+
+
+
+
 def seller_accessory_list(request):
-    seller = Seller.objects.get(seller_detail=request.user)
+    data=Accessory.objects.all()
+    return render(request,'seller/accessory_list.html',{'data':data})
 
-    accessory = Accessory.objects.filter(seller=seller)
-    context = {
-        'accessory': accessory
-    }
 
-    return render(
-        request,
-        'seller/accessory_list.html',
-        context
-    )
-# -------------------------------
+# ---------------------------
 # Camera Add
 # -------------------------------
 
@@ -181,17 +179,15 @@ def camera_add(request):
         form = CameraRegister(request.POST, request.FILES)
 
         if form.is_valid():
-            camera = form.save(commit=False)   # ❗ Don't save yet
-            camera.seller = seller             # ✅ Assign seller
-            camera.save()                      # ✅ Now save
+            camera = form.save(commit=False)
+            camera.camara_detail = seller   # 🔥 VERY IMPORTANT
+            camera.save()
             return redirect('seller_camera_list')
 
     else:
         form = CameraRegister()
 
     return render(request, 'seller/camera_add.html', {'form': form})
-
-
 # -------------------------------
 # CAMERA LIST
 # -------------------------------
@@ -233,3 +229,29 @@ def camera_delete(request, id):
 
     return redirect('seller_camera_list')
 
+def accessory_edit(request, id):
+
+    seller = Seller.objects.get(seller_detail=request.user)
+    accessorys = Accessory.objects.get(id=id, seller=seller)
+
+    if request.method == "POST":
+        form = LensRegister(request.POST, request.FILES, instance=accessorys)
+        if form.is_valid():
+            form.save()
+            return redirect('seller_accessory_list')
+    else:
+        form = LensRegister(instance=accessorys)
+
+    return render(request, 'seller/accessory_edit.html', {'form': form})
+
+
+
+
+def accessory_delete(request,id):
+    data = Accessory.objects.get(id = id)
+    data.delete()
+    return redirect("seller_accessory_list")
+
+def Log__out(request):
+    logout(request)
+    return redirect('index')

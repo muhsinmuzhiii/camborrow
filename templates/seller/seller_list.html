@@ -1,4 +1,4 @@
-{% extends "admin/adminbase.html" %}
+{% extends "seller/sellerbase.html" %}
 {% block content %}
 
 <h2>Selle Details</h2>
@@ -30,8 +30,7 @@
 
 
 
-        <td><a href= "{% url 'customer_edit' %}" ,class="btn btn-danger" role="button" >UPDATE</a></td>
-        <td><a href= "{% url 'customer_delete' i.id %}" ,class="btn btn-danger" role="button" >DELETE</a></td>
+
 
     </tr>
     {% empty %}

@@ -1,0 +1,54 @@
+{% extends "admin/adminbase.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header bg-dark text-white">
+                <h4 class="mb-0">Customer List</h4>
+            </div>
+
+            <div class="card-body p-2">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Sl No</th>
+                                <th>Name</th>
+                                <th>lens_type</th>
+                                <th>focal_length</th>
+                                <th>rent_per_day</th>
+                                <th>image</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {% for l in data %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ l.lens_name }}</td>
+                                <td>{{ l.lens_type }}</td>
+                                <td>{{ l.focal_length }}</td>
+                                <td>{{ l.rent_per_day }}</td>
+                                 <td><img src="{{l.image.url}}" height="100px" width="100px"></td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="5" class="text-center text-danger">
+                                    No lens found
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

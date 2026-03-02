@@ -4,6 +4,7 @@
 
 <html lang="en">
   <head>
+
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -19,11 +20,11 @@
     <link rel="stylesheet" href=" {% static 'assets/vendors/owl-carousel-2/owl.theme.default.min.css' %} ">
     <!-- End plugin css for this page -->
     <!-- inject:css -->
-      {% if data.photo %}
-    <img src="{{ data.photo.url }}" width="150" height="150">
-{% else %}
-    <p>No Image</p>
-{% endif %}
+<!--      {% if data.photo %}-->
+<!--    <img src="{{ data.photo.url }}" width="500" height="150">-->
+<!--{% else %}-->
+<!--    <p>No Image</p>-->
+<!--{% endif %}-->
     <!-- endinject -->
     <!-- Layout styles -->
     <link rel="stylesheet" href=" {% static 'assets/css/style.css' %} ">
@@ -35,20 +36,27 @@
       <!-- partial:partials/_sidebar.html -->
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
-          <a class="sidebar-brand brand-logo" href=" {% static 'index.html' %} "><img src=" {% static 'assets/images/logo.svg' %} " alt="logo" /></a>
-          <a class="sidebar-brand brand-logo-mini" href=" {% static 'index.html' %} "><img src=" {% static 'assets/images/logo-mini.svg' %} " alt="logo" /></a>
+          <a class="sidebar-brand brand-logo" href="{% static 'index.html' %} "><style="font-size:42px;
+          font-family:'Great Vibes', cursive;
+          text-shadow: 2px 2px 6px rgba(0,0,0,0.6);">
+   Cam<span style="color:#D3AB80;">Borrow</span></a>
+          <a class="sidebar-brand brand-logo-mini" href=" {% static 'index.html' %}"><img src="  " alt="logo" /></a>
         </div>
         <ul class="nav">
           <li class="nav-item profile">
             <div class="profile-desc">
               <div class="profile-pic">
                 <div class="count-indicator">
-                  <img class="img-xs rounded-circle " src=" {% static 'assets/images/faces/face15.jpg' %} " alt="">
+                     {% if data.profile_pic %}
+                  <img class="img-xs rounded-circle " src="{{ data.profile_pic.url }}" alt="">
+
+
+                      {% endif %}
                   <span class="count bg-success"></span>
                 </div>
                 <div class="profile-name">
                   <h5 class="mb-0 font-weight-normal">{{request.user}}</h5>
-                  <span>Bus</span>
+                  <span>CamBorrow</span>
                 </div>
               </div>
               <a href="#" id="profile-dropdown" data-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></a>
@@ -102,6 +110,50 @@
             </a>
           </li>
 
+
+               </li>
+        <li class="nav-item menu-items">
+        <a class="nav-link" href="{% url 'camera_view' %}">
+          <span class="menu-icon"><i class="mdi mdi-camera"></i></span>
+          <span class="menu-title"> Camera</span>
+        </a>
+        </li>
+               </li>
+           <li class="nav-item menu-items">
+            <a class="nav-link" href="{% url 'lens_view' %}">
+                <span class="menu-icon">
+                    <i class="mdi mdi-file-document-box"></i>
+                </span>
+                <span class="menu-title">Lens</span>
+            </a>
+          </li>
+
+               </li>
+           <li class="nav-item menu-items">
+            <a class="nav-link" href="{% url 'customer_accessory_list' %}">
+                <span class="menu-icon">
+                    <i class="mdi mdi-format-list-bulleted"></i>
+                </span>
+                <span class="menu-title">Accessories</span>
+            </a>
+          </li>
+             <li class="nav-item menu-items">
+            <a class="nav-link" href="{% url 'cart_view' %}">
+                <span class="menu-icon">
+                    <i class="mdi mdi-file-document-box"></i>
+                </span>
+                <span class="menu-title">CART VIEW</span>
+            </a>
+          </li>
+            <li class="nav-item menu-items">
+            <a class="nav-link" href="{% url 'Log_out' %}">
+                <span class="menu-icon">
+                    <i class="mdi mdi-file-document-box"></i>
+                </span>
+                <span class="menu-title">LOG OUT</span>
+            </a>
+          </li>
+
         </ul>
       </nav>
       <!-- partial -->
@@ -124,7 +176,7 @@
             </ul>
             <ul class="navbar-nav navbar-nav-right">
               <li class="nav-item dropdown d-none d-lg-block">
-                <a class="nav-link btn btn-success create-new-button" id="createbuttonDropdown" data-toggle="dropdown" aria-expanded="false" href="#">+ Create New Project</a>
+<!--                <a class="nav-link btn btn-success create-new-button" id="createbuttonDropdown" data-toggle="dropdown" aria-expanded="false" href="#">+ Create New Project</a>-->
                 <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="createbuttonDropdown">
                   <h6 class="p-3 mb-0">Projects</h6>
                   <div class="dropdown-divider"></div>
@@ -259,11 +311,15 @@
               </li>
               <li class="nav-item dropdown">
                 <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown">
-                  <div class="navbar-profile">
-                    <img class="img-xs rounded-circle" src=" {% static 'assets/images/faces/face15.jpg' %} " alt="">
-                    <p class="mb-0 d-none d-sm-block navbar-profile-name">{{request.user}}</p>
-                    <i class="mdi mdi-menu-down d-none d-sm-block"></i>
-                  </div>
+                 <div class="navbar-profile">
+                     {% if data.profile_pic %}
+                     <img class="img-xs rounded-circle" src="{{ data.profile_pic.url }}" alt="">
+                     {% else %}
+                     <img class="img-xs rounded-circle" src="{% static 'assets/images/default.jpg' %}" alt="">
+                     {% endif %}
+                     <p class="mb-0 d-none d-sm-block navbar-profile-name">{{ request.user }}</p>
+                     <i class="mdi mdi-menu-down d-none d-sm-block"></i>
+                 </div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="profileDropdown">
                   <h6 class="p-3 mb-0">Profile</h6>
@@ -289,11 +345,16 @@
             </button>
           </div>
         </nav>
+
         <!-- partial -->
         <div class="main-panel">
-          <div class="content-wrapper">
-                  </div>
-                </div>
+  <div class="content-wrapper">
+
+      {% block content %}
+      {% endblock %}
+
+  </div>
+</div>
               </div>
             </div>
             <div class="row">
@@ -336,4 +397,5 @@
     <script src=" {% static 'assets/js/dashboard.js' %} "></script>
     <!-- End custom js for this page -->
   </body>
+
 </html>

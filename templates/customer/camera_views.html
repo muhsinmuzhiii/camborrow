@@ -1,0 +1,103 @@
+{% extends "customer/customerbase.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<style>
+.page-header {
+    background-color: #D3AB80;
+    color: white;
+    padding: 15px;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.page-container {
+    background-color: #f1f3f6;
+    padding: 30px;
+    min-height: 100vh;
+}
+
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+
+.rent-btn {
+    background-color: #fb641b;
+    color: white;
+    border: none;
+    padding: 8px;
+    border-radius: 4px;
+    width: 100%;
+}
+.cart-btn {
+    display: inline-block;
+    background-color: #28a745;   /* Green */
+    color: white;
+    padding: 5px 108px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.3s ease;
+}
+
+
+</style>
+
+<div class="page-header text-center">
+    Available Cameras
+</div>
+
+<div class="page-container">
+    <div class="row">
+
+        {% for c in cameras %}
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card shadow h-100">
+
+                {% if c.image %}
+                <img src="{{ c.image.url }}" class="card-img-top">
+                {% else %}
+                <div class="text-center p-5">No Image</div>
+                {% endif %}
+
+                <div class="card-body">
+                    <h5 class="card-title">{{ c.camera_name }}</h5>
+
+                    <p class="card-text">
+                        <strong>Model:</strong> {{ c.camera_model }} <br>
+                        <strong>Brand:</strong> {{ c.brand }} <br>
+                        <strong>Type:</strong> {{ c.camera_type }} <br>
+                        <strong>Resolution:</strong> {{ c.resolution }} <br>
+                        <strong>Sensor:</strong> {{ c.sensor }} <br>
+                        <strong>Rent/Day:</strong> ₹ {{ c.rent_per_day }}
+                    </p>
+
+                    {% if c.is_available %}
+                    <p class="text-success">Available</p>
+                    <a href="{% url 'add_cart' 'camera' c.id %}" class="btn btn-success">
+                        Add to Cart
+                    </a>
+
+                    <a href="{% url 'cart_view' %}" class="rent-btn btn mt-2">
+                        Rent Now
+                    </a>
+                    {% else %}
+                    <p class="text-danger">Not Available</p>
+                    {% endif %}
+
+                </div>
+
+            </div>
+        </div>
+
+        {% empty %}
+        <div class="col-12 text-center">
+            No Cameras Available
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+
+{% endblock %}

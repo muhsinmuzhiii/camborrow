@@ -48,6 +48,11 @@ urlpatterns = [
  path('accessory_edit/<int:id>/', sellerviews.accessory_edit, name="accessory_edit"),
  path('accessory_delete/<int:id>/', sellerviews. accessory_delete, name="accessory_delete"),
 
+
+
+ path("accept-order/<int:id>/", sellerviews.accept_order, name="accept_order"),
+ path("reject-order/<int:id>/", sellerviews.reject_order, name="reject_order"),
+ path("seller-orders/", sellerviews.seller_orders, name="seller_orders"),
  # path('camera_view', castomerviews.camera_view, name='camera_view'),
 
 
@@ -72,9 +77,9 @@ urlpatterns = [
  path('cart_remove/<int:id>/', castomerviews.cart_remove, name='cart_remove'),
  path('remove_cart/<int:id>/', castomerviews.remove_cart, name='remove_cart'),
  path('buy-cart/', castomerviews.buy_cart, name='buy_cart'),
-
+ path('customer_orders', castomerviews.customer_orders, name='customer_orders'),
  # path('accessory_view', castomerviews.accessory_view, name='accessory_view'),
-
+ path('view_orders', castomerviews.view_orders, name='view_orders'),
  path('seller_list_admin', adminviews.seller_list_admin, name='seller_list_admin'),
  path('customer_list_admin', adminviews.customer_list_admin, name='customer_list_admin'),
  path("camera_list_admin", adminviews.camera_list_admin, name='camera_list_admin'),

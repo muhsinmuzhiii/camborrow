@@ -339,7 +339,7 @@ def buy_cart(request):
 
     if not cart_items.exists():
         messages.warning(request, "Your cart is empty!")
-        return redirect("view_cart")
+        return redirect("cart_view")
 
     # 🔄 Create orders
     for item in cart_items:
@@ -358,10 +358,29 @@ def buy_cart(request):
     return redirect("view_orders")  # change to your order page name
 
 
+def view_orders(request):
+    customer = Customer.objects.get(customer_detail=request.user)
+    orders = Order.objects.filter(customer=customer)
 
+    return render(request, "customer/view_orders.html", {
+        "orders": orders
+    })
 
+from django.shortcuts import render, redirect
+from .models import Order, Customer
 
+def customer_orders(request):
 
+    if not request.user.is_authenticated:
+        return redirect("login")
+
+    # 🔥 Get Customer instance properly
+    customer = Customer.objects.get(customer_detail=request.user)
+
+    # 🔥 Now filter using Customer object
+    orders = Order.objects.filter(customer=customer).order_by("-ordered_on")
+
+    return render(request, "customer/customer_orders.html", {"orders": orders})
 def Logout(request):
     logout(request)
     return redirect('index')

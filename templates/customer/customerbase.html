@@ -145,6 +145,14 @@
                 <span class="menu-title">CART VIEW</span>
             </a>
           </li>
+                 <li class="nav-item menu-items">
+            <a class="nav-link" href="{% url 'customer_orders' %}">
+                <span class="menu-icon">
+                    <i class="mdi mdi-file-document-box"></i>
+                </span>
+                <span class="menu-title">Orders</span>
+            </a>
+          </li>
             <li class="nav-item menu-items">
             <a class="nav-link" href="{% url 'Log_out' %}">
                 <span class="menu-icon">
@@ -217,7 +225,7 @@
                 </div>
               </li>
               <li class="nav-item nav-settings d-none d-lg-block">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{% url 'view_orders' %}">
                   <i class="mdi mdi-view-grid"></i>
                 </a>
               </li>

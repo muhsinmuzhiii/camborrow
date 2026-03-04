@@ -144,6 +144,16 @@ class Order(models.Model):
     lens = models.ForeignKey("Lens", on_delete=models.CASCADE, null=True, blank=True)
     accessory = models.ForeignKey("Accessory", on_delete=models.CASCADE, null=True, blank=True)
 
+    status = models.CharField(
+        max_length=20,
+        choices=[
+            ("Pending", "Pending"),
+            ("Accepted", "Accepted"),
+            ("Rejected", "Rejected"),
+        ],
+        default="Pending"
+    )
+
     quantity = models.IntegerField(default=1)
     ordered_on = models.DateTimeField(auto_now_add=True)
 

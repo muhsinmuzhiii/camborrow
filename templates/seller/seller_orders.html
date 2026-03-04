@@ -1,0 +1,72 @@
+{% extends "seller/sellerbase.html" %}
+{% block content %}
+
+<div class="container mt-4">
+    <h3 class="mb-4">📦 Seller Orders</h3>
+
+    {% if orders %}
+        {% for order in orders %}
+        <div class="card shadow-sm mb-3 p-3">
+            <div class="row align-items-center">
+
+                <!-- Product Image -->
+                <div class="col-md-3">
+                    {% if order.camera %}
+                        <img src="{{ order.camera.image.url }}" class="img-fluid rounded" height="120">
+                    {% elif order.lens %}
+                        <img src="{{ order.lens.image.url }}" class="img-fluid rounded" height="120">
+                    {% elif order.accessory %}
+                        <img src="{{ order.accessory.image.url }}" class="img-fluid rounded" height="120">
+                    {% endif %}
+                </div>
+
+                <!-- Product Details -->
+                <div class="col-md-5">
+                    <p><strong>Customer:</strong> {{ order.customer }}</p>
+
+                    {% if order.camera %}
+                        <h5>{{ order.camera.camera_name }}</h5>
+                    {% elif order.lens %}
+                        <h5>{{ order.lens.lens_name }}</h5>
+                    {% elif order.accessory %}
+                        <h5>{{ order.accessory.accessory_name }}</h5>
+                    {% endif %}
+
+                    <p>Quantity: {{ order.quantity }}</p>
+                    <p>Ordered on: {{ order.ordered_on }}</p>
+                </div>
+
+                <!-- Status + Buttons -->
+                <div class="col-md-4 text-center">
+                    <p>
+                        Status:
+                        {% if order.status == "Pending" %}
+                            <span class="badge bg-warning">Pending</span>
+                        {% elif order.status == "Accepted" %}
+                            <span class="badge bg-success">Accepted</span>
+                        {% else %}
+                            <span class="badge bg-danger">Rejected</span>
+                        {% endif %}
+                    </p>
+
+                    {% if order.status == "Pending" %}
+                        <a href="{% url 'accept_order' order.id %}" class="btn btn-success btn-sm">
+                            Accept
+                        </a>
+                        <a href="{% url 'reject_order' order.id %}" class="btn btn-danger btn-sm">
+                            Reject
+                        </a>
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="alert alert-info">
+            No orders available.
+        </div>
+    {% endif %}
+</div>
+
+{% endblock %}

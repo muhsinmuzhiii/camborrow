@@ -1,0 +1,55 @@
+{% extends "customer/customer_profile.html" %}
+{% block content %}
+
+<div class="container mt-4">
+    <h3 class="mb-4">🛒 My Cart</h3>
+
+    {% if items %}
+        {% for i in items %}
+        <div class="card mb-3 shadow-sm p-3">
+            <div class="row align-items-center">
+
+                <div class="col-md-3">
+                    {% if i.camera %}
+                        <img src="{{ i.camera.image.url }}" height="120">
+                    {% elif i.lens %}
+                        <img src="{{ i.lens.image.url }}" height="120">
+                    {% elif i.accessory %}
+                        <img src="{{ i.accessory.image.url }}" height="120">
+                    {% endif %}
+                </div>
+
+                <div class="col-md-6">
+                    {% if i.camera %}
+                        <h5>{{ i.camera.camera_name }}</h5>
+                        ₹ {{ i.camera.rent_per_day }} / day
+                    {% elif i.lens %}
+                        <h5>{{ i.lens.lens_name }}</h5>
+                        ₹ {{ i.lens.rent_per_day }} / day
+                    {% elif i.accessory %}
+                        <h5>{{ i.accessory.accessory_name }}</h5>
+                        ₹ {{ i.accessory.rent_per_day }} / day
+                    {% endif %}
+
+                    <p>Quantity: {{ i.quantity }}</p>
+                </div>
+
+            </div>
+        </div>
+        {% endfor %}
+
+        <div class="card p-3 mt-3">
+            <h5>Total: ₹ {{ total }}</h5>
+            <a href="{% url 'buy_cart' %}" class="btn btn-success">
+                Checkout
+            </a>
+        </div>
+
+    {% else %}
+        <div class="alert alert-info">
+            Your cart is empty.
+        </div>
+    {% endif %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "customer/customerbase.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+    <h2 class="mb-4">My Orders</h2>
+
+    {% for order in orders %}
+        <div class="card shadow-sm mb-3">
+            <div class="card-body">
+
+                {% if order.camera %}
+                    <h5>Camera: {{ order.camera.camera_name }}</h5>
+                {% elif order.lens %}
+                    <h5>Lens: {{ order.lens.lens_name }}</h5>
+                {% elif order.accessory %}
+                    <h5>Accessory: {{ order.accessory.accessory_name }}</h5>
+                {% endif %}
+
+                <p>Quantity: {{ order.quantity }}</p>
+
+            </div>
+        </div>
+
+    {% empty %}
+        <div class="alert alert-info">
+            No Orders Yet
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

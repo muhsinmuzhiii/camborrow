@@ -1,0 +1,58 @@
+{% extends "customer/customerbase.html" %}
+{% block content %}
+
+<div class="container mt-4">
+    <h3 class="mb-4">📦 My Orders</h3>
+
+    {% if orders %}
+        {% for order in orders %}
+        <div class="card shadow-sm mb-3 p-3">
+            <div class="row align-items-center">
+
+                <!-- Product Image -->
+                <div class="col-md-3">
+                    {% if order.camera %}
+                        <img src="{{ order.camera.image.url }}" height="120">
+                    {% elif order.lens %}
+                        <img src="{{ order.lens.image.url }}" height="120">
+                    {% elif order.accessory %}
+                        <img src="{{ order.accessory.image.url }}" height="120">
+                    {% endif %}
+                </div>
+
+                <!-- Details -->
+                <div class="col-md-6">
+                    {% if order.camera %}
+                        <h5>{{ order.camera.camera_name }}</h5>
+                    {% elif order.lens %}
+                        <h5>{{ order.lens.lens_name }}</h5>
+                    {% elif order.accessory %}
+                        <h5>{{ order.accessory.accessory_name }}</h5>
+                    {% endif %}
+
+                    <p>Quantity: {{ order.quantity }}</p>
+                    <p>Ordered on: {{ order.ordered_on }}</p>
+                </div>
+
+                <!-- Status -->
+                <div class="col-md-3 text-center">
+                    {% if order.status == "Pending" %}
+                        <span class="badge bg-warning">Pending</span>
+                    {% elif order.status == "Accepted" %}
+                        <span class="badge bg-success">Accepted</span>
+                    {% else %}
+                        <span class="badge bg-danger">Rejected</span>
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="alert alert-info">
+            No orders found.
+        </div>
+    {% endif %}
+</div>
+
+{% endblock %}

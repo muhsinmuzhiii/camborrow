@@ -2,7 +2,8 @@ from django.contrib.auth import logout
 from django.shortcuts import render, redirect
 
 from cam_borrow.forms import SellerRegister, CameraRegister, LensRegister, AccessoryRegister
-from cam_borrow.models import Seller, Camera, Lens, Accessory
+from cam_borrow.models import Seller, Camera, Lens, Accessory, Order
+
 
 # _______________________________________________________________________________
 # SELLER
@@ -251,6 +252,24 @@ def accessory_delete(request,id):
     data = Accessory.objects.get(id = id)
     data.delete()
     return redirect("seller_accessory_list")
+
+
+def seller_orders(request):
+    orders = Order.objects.all().order_by("-id")
+    return render(request, "seller/seller_orders.html", {"orders": orders})
+
+def accept_order(request, id):
+    order = Order.objects.get(id=id)
+    order.status = "Accepted"
+    order.save()
+    return redirect("seller_orders")
+
+
+def reject_order(request, id):
+    order = Order.objects.get(id=id)
+    order.status = "Rejected"
+    order.save()
+    return redirect("seller_orders")
 
 def Log__out(request):
     logout(request)
